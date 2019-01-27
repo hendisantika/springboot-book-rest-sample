@@ -103,5 +103,13 @@ public class BukuController {
 
     }
 
+    @GetMapping("/sortBuku")
+
+    public List<Buku> sortBuku(@RequestParam(value = "title") String titleBook) {
+
+        return bukuRepository.findByTitleBook(titleBook);
+
+    }
+
 
 }
