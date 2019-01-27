@@ -64,5 +64,28 @@ public class BukuController {
         }
     }
 
+    @DeleteMapping("/{id}")
+
+    public String deleteBuku(@PathVariable(value = "id") Long id) {
+
+        Optional<Buku> buku = bukuRepository.findById(id);
+
+        String result = "";
+
+        if (!buku.isPresent()) {
+
+            result = "id " + id + " tidak ditemukan!";
+
+            return result;
+
+        }
+
+        result = "id " + id + " berhasil dihapus!";
+
+        bukuRepository.deleteById(id);
+
+        return result;
+    }
+
 
 }
