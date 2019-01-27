@@ -111,5 +111,13 @@ public class BukuController {
 
     }
 
+    @GetMapping("/sortstatus/{statusPeminjaman}")
+
+    public List<Buku> sortStatus(@PathVariable(value = "statusPeminjaman") int statusPeminjaman) {
+
+        return bukuRepository.findByStatusPeminjaman(statusPeminjaman);
+
+    }
+
 
 }
