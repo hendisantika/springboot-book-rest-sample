@@ -87,5 +87,21 @@ public class BukuController {
         return result;
     }
 
+    @GetMapping("/{id}")
+
+    public ResponseEntity<Buku> getBukuById(@PathVariable(value = "id") Long id) {
+
+        Optional<Buku> buku = bukuRepository.findById(id);
+
+        if (!buku.isPresent()) {
+
+            return ResponseEntity.notFound().build();
+        }
+
+
+        return new ResponseEntity.ok().body(buku);
+
+    }
+
 
 }
