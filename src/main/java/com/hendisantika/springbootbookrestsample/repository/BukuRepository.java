@@ -20,5 +20,6 @@ import java.util.List;
 public interface BukuRepository extends JpaRepository<Buku, Long> {
     List<Buku> findByStatusPeminjaman(int statusPeminjaman);
 
-    List<Buku> findByTitleBook(String titleBook);
+    List<Buku> findByTitleBookContaining(String titleBook);
+
 }

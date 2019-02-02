@@ -92,7 +92,7 @@ public class BukuController {
 
     @GetMapping("/sortBuku")
     public List<Buku> sortBuku(@RequestParam(value = "title") String titleBook) {
-        return bukuRepository.findByTitleBookContainingIgnoreCase(titleBook);
+        return bukuRepository.findByTitleBookContaining(titleBook);
     }
 
     @GetMapping("/sortstatus/{statusPeminjaman}")
