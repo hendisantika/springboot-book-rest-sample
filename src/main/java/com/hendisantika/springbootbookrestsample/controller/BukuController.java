@@ -33,16 +33,14 @@ public class BukuController {
     }
 
 
-    @PostMapping("/")
+    @PostMapping
     public Buku tambahBuku(@Valid @RequestBody Buku buku) {
         return bukuRepository.save(buku);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Buku> updateBuku(@PathVariable(value = "id") Long id, @Valid @RequestBody Buku detailBuku) {
-
         Optional<Buku> buku = bukuRepository.findById(id);
-
         if (buku.isPresent()) {
 
             Buku dataBuku = buku.get();
@@ -56,7 +54,7 @@ public class BukuController {
 
             dataBuku.setStatusPeminjaman(detailBuku.getStatusPeminjaman());
 
-            Buku updatedBuku = bukuRepository.save(buku);
+            Buku updatedBuku = bukuRepository.save(dataBuku);
 
             return ResponseEntity.ok(updatedBuku);
         } else {
@@ -65,59 +63,40 @@ public class BukuController {
     }
 
     @DeleteMapping("/{id}")
-
     public String deleteBuku(@PathVariable(value = "id") Long id) {
-
         Optional<Buku> buku = bukuRepository.findById(id);
-
         String result = "";
 
         if (!buku.isPresent()) {
-
             result = "id " + id + " tidak ditemukan!";
-
             return result;
-
         }
 
         result = "id " + id + " berhasil dihapus!";
-
         bukuRepository.deleteById(id);
-
         return result;
     }
 
     @GetMapping("/{id}")
-
     public ResponseEntity<Buku> getBukuById(@PathVariable(value = "id") Long id) {
 
         Optional<Buku> buku = bukuRepository.findById(id);
-
+        Buku result = new Buku();
         if (!buku.isPresent()) {
-
             return ResponseEntity.notFound().build();
+        } else {
+            result = buku.get();
+            return ResponseEntity.ok().body(result);
         }
-
-
-        return new ResponseEntity.ok().body(buku);
-
     }
 
     @GetMapping("/sortBuku")
-
     public List<Buku> sortBuku(@RequestParam(value = "title") String titleBook) {
-
-        return bukuRepository.findByTitleBook(titleBook);
-
+        return bukuRepository.findByTitleBookContainingIgnoreCase(titleBook);
     }
 
     @GetMapping("/sortstatus/{statusPeminjaman}")
-
     public List<Buku> sortStatus(@PathVariable(value = "statusPeminjaman") int statusPeminjaman) {
-
         return bukuRepository.findByStatusPeminjaman(statusPeminjaman);
-
     }
-
-
 }
